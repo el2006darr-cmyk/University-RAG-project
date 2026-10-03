@@ -13,7 +13,10 @@ COLLECTION = "documents"
 
 @lru_cache(maxsize=1)
 def get_model() -> SentenceTransformer:
-    return SentenceTransformer(MODEL_NAME)
+    try:
+        return SentenceTransformer(MODEL_NAME, local_files_only=True)
+    except Exception:
+        return SentenceTransformer(MODEL_NAME)
 
 
 def get_collection(reset: bool = False):
